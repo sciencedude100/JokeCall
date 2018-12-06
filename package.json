@@ -1,0 +1,23 @@
+{
+  "name": "jokecall",
+  "version": "1.0.0",
+  "description": "dial-in jokes",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sciencedude100/JokeCall.git"
+  },
+  "author": "Ed Green",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/sciencedude100/JokeCall/issues"
+  },
+  "homepage": "https://github.com/sciencedude100/JokeCall#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "twilio": "^3.25.0"
+  }
+}

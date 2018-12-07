@@ -1,14 +1,38 @@
-var express = require("express");
-var twilio = require("twilio");
+var express = require('express');
+var Twilio = require('twilio');
 
-let app = express();
-app.post('/voice', (req, res) => {
-	console.log("Call Recieved");
-	let audioURL = "http://jokes.ednerd.net/new.mp3";
-	let twiml = new twilio.TwimlResponse();
-	twiml.play(audioURL);
-	res.send(twiml.toString());
+// Account SID and auth token are stored in environment variables.
+
+var accountSid = process.env.TWILIO_ACCOUNT_SID;
+var authToken = process.env.TWILIO_AUTH_TOKEN;
+
+var twilio = new Twilio(accountSid, authToken);
+
+var app = express();
+
+app.use('/static', express.static('www'));
+
+app.post('/voice', function(req, res) {
+  console.log('Call received.');
+
+  // Set the url of the song we are going to play
+  var songUrl = 'http://jokes.ednerd.net/new.mp3';
+
+  // Generate a TwiML response
+  var VoiceResponse = Twilio.twiml.VoiceResponse;
+  var voiceResponse = new VoiceResponse();
+  
+  // Set the response type as XML.
+  res.header('Content-Type', 'text/xml');
+
+  // Play mp3 over the phone.
+  voiceResponse.play(songUrl);
+
+  // Send the TwiML as the response.
+  res.send(voiceResponse.toString());
 });
 
-app.listen(3000, () => console.log("Listening at :3000"));
-
+// Make our Express server listen on port 3000.
+app.listen(3000, function() {
+  console.log('Listening at http://localhost:3000')
+});
